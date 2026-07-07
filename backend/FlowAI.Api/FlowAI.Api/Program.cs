@@ -1,5 +1,6 @@
 using FlowAI.Api.Middleware;
 using FlowAI.Api.Options;
+using FlowAI.Api.OpenApi;
 using FlowAI.Api.Services;
 using Microsoft.OpenApi;
 using System.Reflection;
@@ -38,13 +39,14 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "ApiKey"
     });
 
-    options.AddSecurityRequirement(_ => new OpenApiSecurityRequirement
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
         {
-            new OpenApiSecuritySchemeReference("ApiKey", null, "ApiKey"),
+            new OpenApiSecuritySchemeReference("ApiKey", document, null),
             new List<string>()
         }
     });
+    options.DocumentFilter<ApiKeyDocumentFilter>();
 });
 
 builder.Services.AddSingleton<StatusHistoryService>();
