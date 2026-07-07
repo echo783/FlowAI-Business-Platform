@@ -39,4 +39,10 @@ public class StatusHistoryService
             .OrderByDescending(x => x.ChangedAt)
             .ToList();
     }
+
+    public void Clear()
+    {
+        _histories.Clear();
+        _historySeq = 1;
+    }
 }

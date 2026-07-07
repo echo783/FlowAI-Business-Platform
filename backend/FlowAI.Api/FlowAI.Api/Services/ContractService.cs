@@ -89,4 +89,10 @@ public class ContractService
     {
         return _statusHistoryService.GetAll();
     }
+
+    public void Clear()
+    {
+        _contracts.Clear();
+        _contractSeq = 1;
+    }
 }

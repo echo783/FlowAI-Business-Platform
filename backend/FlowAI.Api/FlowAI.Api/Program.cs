@@ -56,6 +56,7 @@ builder.Services.AddSingleton<SettlementService>();
 builder.Services.AddSingleton<DashboardService>();
 builder.Services.AddSingleton<AgentService>();
 builder.Services.AddSingleton<ApprovalRequestService>();
+builder.Services.AddSingleton<DemoDataService>();
 
 
 var app = builder.Build();

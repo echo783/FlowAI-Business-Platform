@@ -31,6 +31,12 @@ public class SettlementService
         return _settlements.FirstOrDefault(x => x.Id == id);
     }
 
+    public void Clear()
+    {
+        _settlements.Clear();
+        _settlementSeq = 1;
+    }
+
     public SettlementResult Create(CreateSettlementRequest request)
     {
         var workOrder = _workOrderService.GetById(request.WorkOrderId);

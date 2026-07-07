@@ -31,6 +31,12 @@ public class WorkOrderService
         return _workOrders.FirstOrDefault(x => x.Id == id);
     }
 
+    public void Clear()
+    {
+        _workOrders.Clear();
+        _workOrderSeq = 1;
+    }
+
     public WorkOrder CreateAutomaticForContract(Contract contract)
     {
         var workOrder = new WorkOrder
@@ -65,9 +71,10 @@ public class WorkOrderService
             return WorkOrderCreateResult.NotFound("Contract not found.");
         }
 
-        if (contract.Status != BusinessStatus.ContractApproved)
+        if (contract.Status != BusinessStatus.ContractApproved &&
+            contract.Status != BusinessStatus.ContractConvertedToWork)
         {
-            return WorkOrderCreateResult.Invalid("Only approved contracts can create work orders.");
+            return WorkOrderCreateResult.Invalid("Only approved or work-converted contracts can create work orders.");
         }
 
         var workOrder = new WorkOrder

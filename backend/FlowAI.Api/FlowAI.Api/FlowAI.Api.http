@@ -1,6 +1,40 @@
 @HostAddress = https://localhost:7168
 @ApiKey = local-dev-key
 
+### 0. Reset demo data for Dashboard and Agent demo
+POST {{HostAddress}}/api/demo/reset
+X-FlowAI-Api-Key: {{ApiKey}}
+Accept: application/json
+
+### 0-1. Dashboard summary after demo reset
+GET {{HostAddress}}/api/dashboard/summary
+X-FlowAI-Api-Key: {{ApiKey}}
+Accept: application/json
+
+### 0-2. Agent pending approval contracts after demo reset
+GET {{HostAddress}}/api/agent/contracts/pending-approval
+X-FlowAI-Api-Key: {{ApiKey}}
+Accept: application/json
+
+### 0-3. Agent today work orders after demo reset
+GET {{HostAddress}}/api/agent/workorders/today
+X-FlowAI-Api-Key: {{ApiKey}}
+Accept: application/json
+
+### 0-4. Agent on-hold settlements after demo reset
+GET {{HostAddress}}/api/agent/settlements/on-hold
+X-FlowAI-Api-Key: {{ApiKey}}
+Accept: application/json
+
+### 0-5. Agent query after demo reset
+POST {{HostAddress}}/api/agent/query
+X-FlowAI-Api-Key: {{ApiKey}}
+Content-Type: application/json
+
+{
+  "question": "현재 업무 현황 요약해줘"
+}
+
 ### 1. Create contract (계약 등록)
 POST {{HostAddress}}/api/contracts
 X-FlowAI-Api-Key: {{ApiKey}}

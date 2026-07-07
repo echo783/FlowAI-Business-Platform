@@ -34,6 +34,12 @@ public class ApprovalRequestService
         return _approvalRequests.FirstOrDefault(x => x.Id == id);
     }
 
+    public void Clear()
+    {
+        _approvalRequests.Clear();
+        _approvalRequestSeq = 1;
+    }
+
     public ApprovalWorkflowResult RequestContractApproval(int contractId, CreateApprovalRequestRequest request)
     {
         var contract = _contractService.GetById(contractId);
