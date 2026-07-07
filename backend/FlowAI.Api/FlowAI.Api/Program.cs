@@ -11,6 +11,7 @@ builder.Services.AddOpenApi();
 builder.Services.AddSingleton<StatusHistoryService>();
 builder.Services.AddSingleton<ContractService>();
 builder.Services.AddSingleton<WorkOrderService>();
+builder.Services.AddSingleton<SettlementService>();
 
 
 var app = builder.Build();
