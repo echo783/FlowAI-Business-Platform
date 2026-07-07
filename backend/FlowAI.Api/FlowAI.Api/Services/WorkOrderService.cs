@@ -6,13 +6,17 @@ namespace FlowAI.Api.Services;
 public class WorkOrderService
 {
     private readonly ContractService _contractService;
+    private readonly StatusHistoryService _statusHistoryService;
     private readonly List<WorkOrder> _workOrders = new();
 
     private int _workOrderSeq = 1;
 
-    public WorkOrderService(ContractService contractService)
+    public WorkOrderService(
+        ContractService contractService,
+        StatusHistoryService statusHistoryService)
     {
         _contractService = contractService;
+        _statusHistoryService = statusHistoryService;
     }
 
     public List<WorkOrder> GetAll()
@@ -53,6 +57,14 @@ public class WorkOrderService
 
         _workOrders.Add(workOrder);
 
+        _statusHistoryService.AddHistory(
+            entityType: "WorkOrder",
+            entityId: workOrder.Id,
+            fromStatus: BusinessStatus.WorkCreated,
+            toStatus: BusinessStatus.WorkCreated,
+            memo: "작업 생성"
+        );
+
         return WorkOrderCreateResult.Success(workOrder);
     }
 
@@ -70,8 +82,18 @@ public class WorkOrderService
             return WorkOrderTransitionResult.Invalid("Only created work orders can be started.");
         }
 
+        var beforeStatus = workOrder.Status;
+
         workOrder.Status = BusinessStatus.WorkInProgress;
         workOrder.StartedAt = DateTime.Now;
+
+        _statusHistoryService.AddHistory(
+            entityType: "WorkOrder",
+            entityId: workOrder.Id,
+            fromStatus: beforeStatus,
+            toStatus: BusinessStatus.WorkInProgress,
+            memo: "작업 시작"
+        );
 
         return WorkOrderTransitionResult.Success(workOrder);
     }
@@ -90,8 +112,18 @@ public class WorkOrderService
             return WorkOrderTransitionResult.Invalid("Only in-progress work orders can be completed.");
         }
 
+        var beforeStatus = workOrder.Status;
+
         workOrder.Status = BusinessStatus.WorkCompleted;
         workOrder.CompletedAt = DateTime.Now;
+
+        _statusHistoryService.AddHistory(
+            entityType: "WorkOrder",
+            entityId: workOrder.Id,
+            fromStatus: beforeStatus,
+            toStatus: BusinessStatus.WorkCompleted,
+            memo: "작업 완료"
+        );
 
         return WorkOrderTransitionResult.Success(workOrder);
     }

@@ -1,10 +1,10 @@
 @HostAddress = https://localhost:7168
 
-### 1.Contract list
+### 1. 계약 목록 조회
 GET {{HostAddress}}/api/contracts
 Accept: application/json
 
-### 2.Create contract
+### 2. 계약 등록
 POST {{HostAddress}}/api/contracts
 Content-Type: application/json
 
@@ -15,15 +15,15 @@ Content-Type: application/json
   "amount": 12000000
 }
 
-### 3.Contract detail
+### 3. 계약 상세 조회
 GET {{HostAddress}}/api/contracts/1
 Accept: application/json
 
-### 4.Approve contract
+### 4. 계약 승인
 POST {{HostAddress}}/api/contracts/1/approve
 Accept: application/json
 
-### 5.Create work order
+### 5. 작업 생성
 POST {{HostAddress}}/api/work-orders
 Content-Type: application/json
 
@@ -33,22 +33,23 @@ Content-Type: application/json
   "title": "Initial implementation work"
 }
 
-### 6.Work order list
+### 6. 작업 목록 조회
 GET {{HostAddress}}/api/work-orders
 Accept: application/json
 
-### 7.Work order detail
+### 7. 작업 상세 조회
 GET {{HostAddress}}/api/work-orders/1
 Accept: application/json
 
-### 8.Start work order
+### 8. 작업 시작
 POST {{HostAddress}}/api/work-orders/1/start
 Accept: application/json
 
-### Complete work order
+### 9. 작업 완료
 POST {{HostAddress}}/api/work-orders/1/complete
 Accept: application/json
 
-### 10Status history list
-GET {{HostAddress}}/api/contracts/histories
+### 10. 공통 상태 이력 조회
+GET {{HostAddress}}/api/status-histories
 Accept: application/json
+

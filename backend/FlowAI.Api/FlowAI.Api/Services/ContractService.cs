@@ -5,11 +5,15 @@ namespace FlowAI.Api.Services;
 
 public class ContractService
 {
+    private readonly StatusHistoryService _statusHistoryService;
     private readonly List<Contract> _contracts = new();
-    private readonly List<StatusHistory> _histories = new();
 
     private int _contractSeq = 1;
-    private int _historySeq = 1;
+
+    public ContractService(StatusHistoryService statusHistoryService)
+    {
+        _statusHistoryService = statusHistoryService;
+    }
 
     public List<Contract> GetAll()
     {
@@ -38,7 +42,7 @@ public class ContractService
 
         _contracts.Add(contract);
 
-        AddHistory(
+        _statusHistoryService.AddHistory(
             entityType: "Contract",
             entityId: contract.Id,
             fromStatus: BusinessStatus.ContractRegistered,
@@ -68,7 +72,7 @@ public class ContractService
         contract.Status = BusinessStatus.ContractApproved;
         contract.ApprovedAt = DateTime.Now;
 
-        AddHistory(
+        _statusHistoryService.AddHistory(
             entityType: "Contract",
             entityId: contract.Id,
             fromStatus: beforeStatus,
@@ -81,30 +85,6 @@ public class ContractService
 
     public List<StatusHistory> GetHistories()
     {
-        return _histories
-            .OrderByDescending(x => x.ChangedAt)
-            .ToList();
-    }
-
-    private void AddHistory(
-        string entityType,
-        int entityId,
-        BusinessStatus fromStatus,
-        BusinessStatus toStatus,
-        string memo)
-    {
-        var history = new StatusHistory
-        {
-            Id = _historySeq++,
-            EntityType = entityType,
-            EntityId = entityId,
-            FromStatus = fromStatus,
-            ToStatus = toStatus,
-            ChangedBy = "system",
-            Memo = memo,
-            ChangedAt = DateTime.Now
-        };
-
-        _histories.Add(history);
+        return _statusHistoryService.GetAll();
     }
 }
