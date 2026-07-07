@@ -1,3 +1,5 @@
+using FlowAI.Api.Middleware;
+using FlowAI.Api.Options;
 using FlowAI.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.Configure<ApiKeyOptions>(builder.Configuration.GetSection("ApiKey"));
 
 builder.Services.AddSingleton<StatusHistoryService>();
 builder.Services.AddSingleton<ContractService>();
@@ -27,6 +30,10 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
+
+app.MapGet("/health", () => Results.Ok(new { status = "Healthy" }));
+
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseAuthorization();
 
