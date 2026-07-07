@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlowAI.Api.Controllers;
 
+/// <summary>
+/// Provides common status history records across contracts, approvals, work orders, and settlements.
+/// </summary>
 [ApiController]
 [Route("api/status-histories")]
 public class StatusHistoriesController : ControllerBase
@@ -15,6 +18,9 @@ public class StatusHistoriesController : ControllerBase
         _statusHistoryService = statusHistoryService;
     }
 
+    /// <summary>
+    /// Gets all status history records in latest-first order.
+    /// </summary>
     [HttpGet]
     public ActionResult<List<StatusHistory>> GetAll()
     {

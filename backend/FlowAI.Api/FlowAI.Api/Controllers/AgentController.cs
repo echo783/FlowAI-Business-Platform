@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlowAI.Api.Controllers;
 
+/// <summary>
+/// Provides mock query endpoints prepared for Copilot Studio and Power Platform connector scenarios.
+/// </summary>
 [ApiController]
 [Route("api/agent")]
 public class AgentController : ControllerBase
@@ -16,6 +19,9 @@ public class AgentController : ControllerBase
         _agentService = agentService;
     }
 
+    /// <summary>
+    /// Gets contracts that are waiting for approval or not yet approved.
+    /// </summary>
     [HttpGet("contracts/pending-approval")]
     public ActionResult<List<Contract>> GetPendingApprovalContracts()
     {
@@ -24,6 +30,9 @@ public class AgentController : ControllerBase
         return Ok(contracts);
     }
 
+    /// <summary>
+    /// Gets work orders currently in progress today.
+    /// </summary>
     [HttpGet("workorders/today")]
     public ActionResult<List<WorkOrder>> GetTodayWorkOrders()
     {
@@ -32,6 +41,9 @@ public class AgentController : ControllerBase
         return Ok(workOrders);
     }
 
+    /// <summary>
+    /// Gets delayed work order candidates using the current mock delay rule.
+    /// </summary>
     [HttpGet("workorders/delayed")]
     public ActionResult<List<WorkOrder>> GetDelayedWorkOrders()
     {
@@ -40,6 +52,9 @@ public class AgentController : ControllerBase
         return Ok(workOrders);
     }
 
+    /// <summary>
+    /// Gets settlements currently on hold.
+    /// </summary>
     [HttpGet("settlements/on-hold")]
     public ActionResult<List<Settlement>> GetOnHoldSettlements()
     {
@@ -48,6 +63,9 @@ public class AgentController : ControllerBase
         return Ok(settlements);
     }
 
+    /// <summary>
+    /// Gets workflow status summary for a customer.
+    /// </summary>
     [HttpGet("customers/{customerName}/status-summary")]
     public ActionResult<CustomerStatusSummaryResponse> GetCustomerStatusSummary(string customerName)
     {
@@ -56,6 +74,9 @@ public class AgentController : ControllerBase
         return Ok(summary);
     }
 
+    /// <summary>
+    /// Returns a mock natural-language answer from current in-memory workflow data.
+    /// </summary>
     [HttpPost("query")]
     public ActionResult<AgentQueryResponse> Query(AgentQueryRequest request)
     {

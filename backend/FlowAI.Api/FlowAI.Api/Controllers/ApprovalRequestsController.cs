@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlowAI.Api.Controllers;
 
+/// <summary>
+/// Provides read-only access to approval requests created during contract workflow.
+/// </summary>
 [ApiController]
 [Route("api/approval-requests")]
 public class ApprovalRequestsController : ControllerBase
@@ -15,6 +18,9 @@ public class ApprovalRequestsController : ControllerBase
         _approvalRequestService = approvalRequestService;
     }
 
+    /// <summary>
+    /// Gets all approval requests.
+    /// </summary>
     [HttpGet]
     public ActionResult<List<ApprovalRequest>> GetAll()
     {
@@ -23,6 +29,9 @@ public class ApprovalRequestsController : ControllerBase
         return Ok(approvalRequests);
     }
 
+    /// <summary>
+    /// Gets a single approval request by id.
+    /// </summary>
     [HttpGet("{id:int}")]
     public ActionResult<ApprovalRequest> GetById(int id)
     {

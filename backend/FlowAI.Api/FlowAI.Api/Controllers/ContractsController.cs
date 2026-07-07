@@ -1,10 +1,13 @@
-﻿using FlowAI.Api.DTOs;
+using FlowAI.Api.DTOs;
 using FlowAI.Api.Models;
 using FlowAI.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FlowAI.Api.Controllers;
 
+/// <summary>
+/// Manages contract registration and approval workflow entry points.
+/// </summary>
 [ApiController]
 [Route("api/contracts")]
 public class ContractsController : ControllerBase
@@ -20,6 +23,9 @@ public class ContractsController : ControllerBase
         _approvalRequestService = approvalRequestService;
     }
 
+    /// <summary>
+    /// Gets all contracts in the current in-memory workflow store.
+    /// </summary>
     [HttpGet]
     public ActionResult<List<Contract>> GetAll()
     {
@@ -28,6 +34,9 @@ public class ContractsController : ControllerBase
         return Ok(contracts);
     }
 
+    /// <summary>
+    /// Gets a single contract by id.
+    /// </summary>
     [HttpGet("{id:int}")]
     public ActionResult<Contract> GetById(int id)
     {
@@ -41,6 +50,9 @@ public class ContractsController : ControllerBase
         return Ok(contract);
     }
 
+    /// <summary>
+    /// Registers a new contract in the initial registered status.
+    /// </summary>
     [HttpPost]
     public ActionResult<Contract> Create(CreateContractRequest request)
     {
@@ -53,6 +65,9 @@ public class ContractsController : ControllerBase
         );
     }
 
+    /// <summary>
+    /// Requests approval for a registered contract.
+    /// </summary>
     [HttpPost("{id:int}/request-approval")]
     public ActionResult<ApprovalRequest> RequestApproval(int id, CreateApprovalRequestRequest request)
     {
@@ -71,6 +86,9 @@ public class ContractsController : ControllerBase
         return Ok(result.ApprovalRequest);
     }
 
+    /// <summary>
+    /// Approves a contract approval request and auto-creates a work order.
+    /// </summary>
     [HttpPost("{id:int}/approve")]
     public ActionResult<Contract> Approve(int id)
     {
@@ -89,6 +107,9 @@ public class ContractsController : ControllerBase
         return Ok(result.Contract);
     }
 
+    /// <summary>
+    /// Rejects a contract approval request with a comment.
+    /// </summary>
     [HttpPost("{id:int}/reject")]
     public ActionResult<Contract> Reject(int id, RejectApprovalRequest request)
     {
@@ -107,6 +128,9 @@ public class ContractsController : ControllerBase
         return Ok(result.Contract);
     }
 
+    /// <summary>
+    /// Gets status history records through the legacy contract route.
+    /// </summary>
     [HttpGet("histories")]
     public ActionResult<List<StatusHistory>> GetHistories()
     {

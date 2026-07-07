@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FlowAI.Api.Controllers;
 
+/// <summary>
+/// Manages work orders created from approved contracts.
+/// </summary>
 [ApiController]
 [Route("api/work-orders")]
 public class WorkOrdersController : ControllerBase
@@ -16,6 +19,9 @@ public class WorkOrdersController : ControllerBase
         _workOrderService = workOrderService;
     }
 
+    /// <summary>
+    /// Gets all work orders.
+    /// </summary>
     [HttpGet]
     public ActionResult<List<WorkOrder>> GetAll()
     {
@@ -24,6 +30,9 @@ public class WorkOrdersController : ControllerBase
         return Ok(workOrders);
     }
 
+    /// <summary>
+    /// Gets a single work order by id.
+    /// </summary>
     [HttpGet("{id:int}")]
     public ActionResult<WorkOrder> GetById(int id)
     {
@@ -37,6 +46,9 @@ public class WorkOrdersController : ControllerBase
         return Ok(workOrder);
     }
 
+    /// <summary>
+    /// Creates a work order manually for an approved contract.
+    /// </summary>
     [HttpPost]
     public ActionResult<WorkOrder> Create(CreateWorkOrderRequest request)
     {
@@ -59,6 +71,9 @@ public class WorkOrdersController : ControllerBase
         );
     }
 
+    /// <summary>
+    /// Starts a created work order.
+    /// </summary>
     [HttpPost("{id:int}/start")]
     public ActionResult<WorkOrder> Start(int id)
     {
@@ -77,6 +92,9 @@ public class WorkOrdersController : ControllerBase
         return Ok(result.WorkOrder);
     }
 
+    /// <summary>
+    /// Completes an in-progress work order.
+    /// </summary>
     [HttpPost("{id:int}/complete")]
     public ActionResult<WorkOrder> Complete(int id)
     {
