@@ -13,6 +13,7 @@ builder.Services.AddSingleton<ContractService>();
 builder.Services.AddSingleton<WorkOrderService>();
 builder.Services.AddSingleton<SettlementService>();
 builder.Services.AddSingleton<DashboardService>();
+builder.Services.AddSingleton<AgentService>();
 
 
 var app = builder.Build();

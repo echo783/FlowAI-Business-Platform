@@ -96,3 +96,39 @@ Content-Type: application/json
 ### 17. Dashboard summary
 GET {{HostAddress}}/api/dashboard/summary
 Accept: application/json
+
+### 18. Agent pending approval contracts
+GET {{HostAddress}}/api/agent/contracts/pending-approval
+Accept: application/json
+
+### 19. Agent today work orders
+GET {{HostAddress}}/api/agent/workorders/today
+Accept: application/json
+
+### 20. Agent delayed work orders
+GET {{HostAddress}}/api/agent/workorders/delayed
+Accept: application/json
+
+### 21. Agent on-hold settlements
+GET {{HostAddress}}/api/agent/settlements/on-hold
+Accept: application/json
+
+### 22. Agent customer status summary
+GET {{HostAddress}}/api/agent/customers/Sample%20Customer/status-summary
+Accept: application/json
+
+### 23. Agent query dashboard summary
+POST {{HostAddress}}/api/agent/query
+Content-Type: application/json
+
+{
+  "question": "현재 업무 현황 요약해줘"
+}
+
+### 24. Agent query held settlements
+POST {{HostAddress}}/api/agent/query
+Content-Type: application/json
+
+{
+  "question": "정산 보류 건 요약해줘"
+}
