@@ -1,0 +1,6 @@
+@FlowAI.Api_HostAddress = http://localhost:5006
+
+GET {{FlowAI.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

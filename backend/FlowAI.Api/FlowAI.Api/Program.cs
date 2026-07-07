@@ -9,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 builder.Services.AddSingleton<ContractService>();
+builder.Services.AddSingleton<WorkOrderService>();
 
 
 var app = builder.Build();

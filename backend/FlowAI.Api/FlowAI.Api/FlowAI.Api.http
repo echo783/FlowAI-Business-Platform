@@ -1,28 +1,54 @@
 @HostAddress = https://localhost:7168
 
-### 계약 목록 조회
+### 1.Contract list
 GET {{HostAddress}}/api/contracts
 Accept: application/json
 
-### 계약 등록
+### 2.Create contract
 POST {{HostAddress}}/api/contracts
 Content-Type: application/json
 
 {
   "contractNo": "CT-2026-0001",
-  "customerName": "샘플 고객사",
-  "title": "업무 자동화 플랫폼 구축 계약",
+  "customerName": "Sample Customer",
+  "title": "Business Workflow Platform Contract",
   "amount": 12000000
 }
 
-### 계약 단건 조회
+### 3.Contract detail
 GET {{HostAddress}}/api/contracts/1
 Accept: application/json
 
-### 계약 승인
+### 4.Approve contract
 POST {{HostAddress}}/api/contracts/1/approve
 Accept: application/json
 
-### 상태 이력 조회
+### 5.Create work order
+POST {{HostAddress}}/api/work-orders
+Content-Type: application/json
+
+{
+  "contractId": 1,
+  "workNo": "WO-2026-0001",
+  "title": "Initial implementation work"
+}
+
+### 6.Work order list
+GET {{HostAddress}}/api/work-orders
+Accept: application/json
+
+### 7.Work order detail
+GET {{HostAddress}}/api/work-orders/1
+Accept: application/json
+
+### 8.Start work order
+POST {{HostAddress}}/api/work-orders/1/start
+Accept: application/json
+
+### Complete work order
+POST {{HostAddress}}/api/work-orders/1/complete
+Accept: application/json
+
+### 10Status history list
 GET {{HostAddress}}/api/contracts/histories
 Accept: application/json
