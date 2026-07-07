@@ -27,6 +27,7 @@ public class AgentService
         return _contractService.GetAll()
             .Where(x =>
                 x.Status == BusinessStatus.ContractApprovalPending ||
+                x.Status == BusinessStatus.ContractApprovalRequested ||
                 // TODO: Replace ContractRegistered with only ApprovalRequested/Pending after approval request workflow is added.
                 x.Status == BusinessStatus.ContractRegistered)
             .ToList();
@@ -82,7 +83,9 @@ public class AgentService
         {
             CustomerName = customerName,
             ContractCount = contracts.Count,
-            ApprovedContractCount = contracts.Count(x => x.Status == BusinessStatus.ContractApproved),
+            ApprovedContractCount = contracts.Count(x =>
+                x.Status == BusinessStatus.ContractApproved ||
+                x.Status == BusinessStatus.ContractConvertedToWork),
             WorkOrderCount = workOrders.Count,
             WorkInProgressCount = workOrders.Count(x => x.Status == BusinessStatus.WorkInProgress),
             WorkCompletedCount = workOrders.Count(x => x.Status == BusinessStatus.WorkCompleted),

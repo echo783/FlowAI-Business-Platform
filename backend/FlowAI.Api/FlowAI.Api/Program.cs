@@ -14,6 +14,7 @@ builder.Services.AddSingleton<WorkOrderService>();
 builder.Services.AddSingleton<SettlementService>();
 builder.Services.AddSingleton<DashboardService>();
 builder.Services.AddSingleton<AgentService>();
+builder.Services.AddSingleton<ApprovalRequestService>();
 
 
 var app = builder.Build();

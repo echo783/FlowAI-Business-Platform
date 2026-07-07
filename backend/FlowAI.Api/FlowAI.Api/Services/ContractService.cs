@@ -53,7 +53,11 @@ public class ContractService
         return contract;
     }
 
-    public Contract? Approve(int id)
+    public Contract? UpdateStatus(
+        int id,
+        BusinessStatus toStatus,
+        string memo,
+        bool setApprovedAt = false)
     {
         var contract = GetById(id);
 
@@ -62,22 +66,20 @@ public class ContractService
             return null;
         }
 
-        var beforeStatus = contract.Status;
+        var fromStatus = contract.Status;
+        contract.Status = toStatus;
 
-        if (beforeStatus == BusinessStatus.ContractApproved)
+        if (setApprovedAt)
         {
-            return contract;
+            contract.ApprovedAt = DateTime.Now;
         }
-
-        contract.Status = BusinessStatus.ContractApproved;
-        contract.ApprovedAt = DateTime.Now;
 
         _statusHistoryService.AddHistory(
             entityType: "Contract",
             entityId: contract.Id,
-            fromStatus: beforeStatus,
-            toStatus: BusinessStatus.ContractApproved,
-            memo: "계약 승인"
+            fromStatus: fromStatus,
+            toStatus: toStatus,
+            memo: memo
         );
 
         return contract;

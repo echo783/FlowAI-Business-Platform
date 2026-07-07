@@ -10,10 +10,14 @@ namespace FlowAI.Api.Controllers;
 public class ContractsController : ControllerBase
 {
     private readonly ContractService _contractService;
+    private readonly ApprovalRequestService _approvalRequestService;
 
-    public ContractsController(ContractService contractService)
+    public ContractsController(
+        ContractService contractService,
+        ApprovalRequestService approvalRequestService)
     {
         _contractService = contractService;
+        _approvalRequestService = approvalRequestService;
     }
 
     [HttpGet]
@@ -49,17 +53,58 @@ public class ContractsController : ControllerBase
         );
     }
 
+    [HttpPost("{id:int}/request-approval")]
+    public ActionResult<ApprovalRequest> RequestApproval(int id, CreateApprovalRequestRequest request)
+    {
+        var result = _approvalRequestService.RequestContractApproval(id, request);
+
+        if (result.IsNotFound)
+        {
+            return NotFound(result.Error);
+        }
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.ApprovalRequest);
+    }
+
     [HttpPost("{id:int}/approve")]
     public ActionResult<Contract> Approve(int id)
     {
-        var contract = _contractService.Approve(id);
+        var result = _approvalRequestService.ApproveContract(id);
 
-        if (contract is null)
+        if (result.IsNotFound)
         {
-            return NotFound();
+            return NotFound(result.Error);
         }
 
-        return Ok(contract);
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Contract);
+    }
+
+    [HttpPost("{id:int}/reject")]
+    public ActionResult<Contract> Reject(int id, RejectApprovalRequest request)
+    {
+        var result = _approvalRequestService.RejectContract(id, request);
+
+        if (result.IsNotFound)
+        {
+            return NotFound(result.Error);
+        }
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Contract);
     }
 
     [HttpGet("histories")]

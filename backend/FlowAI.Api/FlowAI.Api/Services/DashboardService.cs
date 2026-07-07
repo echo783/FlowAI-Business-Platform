@@ -28,7 +28,9 @@ public class DashboardService
         return new DashboardSummaryResponse
         {
             TotalContracts = contracts.Count,
-            ApprovedContracts = contracts.Count(x => x.Status == BusinessStatus.ContractApproved),
+            ApprovedContracts = contracts.Count(x =>
+                x.Status == BusinessStatus.ContractApproved ||
+                x.Status == BusinessStatus.ContractConvertedToWork),
             TotalWorkOrders = workOrders.Count,
             WorkInProgress = workOrders.Count(x => x.Status == BusinessStatus.WorkInProgress),
             WorkCompleted = workOrders.Count(x => x.Status == BusinessStatus.WorkCompleted),

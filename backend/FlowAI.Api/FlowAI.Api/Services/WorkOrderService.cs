@@ -31,6 +31,31 @@ public class WorkOrderService
         return _workOrders.FirstOrDefault(x => x.Id == id);
     }
 
+    public WorkOrder CreateAutomaticForContract(Contract contract)
+    {
+        var workOrder = new WorkOrder
+        {
+            Id = _workOrderSeq++,
+            ContractId = contract.Id,
+            WorkNo = $"WO-AUTO-{contract.Id:0000}",
+            Title = $"{contract.Title} Work Order",
+            Status = BusinessStatus.WorkCreated,
+            CreatedAt = DateTime.Now
+        };
+
+        _workOrders.Add(workOrder);
+
+        _statusHistoryService.AddHistory(
+            entityType: "WorkOrder",
+            entityId: workOrder.Id,
+            fromStatus: BusinessStatus.WorkCreated,
+            toStatus: BusinessStatus.WorkCreated,
+            memo: "Work order auto-created after contract approval"
+        );
+
+        return workOrder;
+    }
+
     public WorkOrderCreateResult Create(CreateWorkOrderRequest request)
     {
         var contract = _contractService.GetById(request.ContractId);
