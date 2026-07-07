@@ -42,7 +42,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/agent/workorders/today": {
@@ -81,7 +86,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/agent/workorders/delayed": {
@@ -120,7 +130,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/agent/settlements/on-hold": {
@@ -159,7 +174,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/agent/customers/{customerName}/status-summary": {
@@ -199,7 +219,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/agent/query": {
@@ -248,7 +273,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/approval-requests": {
@@ -287,7 +317,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/approval-requests/{id}": {
@@ -328,7 +363,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts": {
@@ -367,7 +407,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -414,7 +459,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts/{id}": {
@@ -455,7 +505,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts/{id}/request-approval": {
@@ -515,7 +570,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts/{id}/approve": {
@@ -556,7 +616,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts/{id}/reject": {
@@ -616,7 +681,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/contracts/histories": {
@@ -655,7 +725,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/dashboard/summary": {
@@ -685,7 +760,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/health": {
@@ -736,7 +816,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -783,7 +868,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/settlements/{id}": {
@@ -824,7 +914,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/settlements/{id}/review": {
@@ -865,7 +960,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/settlements/{id}/approve": {
@@ -906,7 +1006,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/settlements/{id}/hold": {
@@ -966,7 +1071,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/settlements/{id}/reject": {
@@ -1026,7 +1136,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/status-histories": {
@@ -1065,7 +1180,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/work-orders": {
@@ -1104,7 +1224,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       },
       "post": {
         "tags": [
@@ -1151,7 +1276,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/work-orders/{id}": {
@@ -1192,7 +1322,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/work-orders/{id}/start": {
@@ -1233,7 +1368,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     },
     "/api/work-orders/{id}/complete": {
@@ -1274,7 +1414,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
       }
     }
   },
@@ -1758,7 +1903,9 @@
     }
   },
   "security": [
-    { }
+    {
+      "ApiKey": [ ]
+    }
   ],
   "tags": [
     {
