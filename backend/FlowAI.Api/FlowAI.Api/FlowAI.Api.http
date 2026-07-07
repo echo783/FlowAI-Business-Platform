@@ -27,6 +27,7 @@ X-FlowAI-Api-Key: {{ApiKey}}
 Accept: application/json
 
 ### 0-5. Agent query after demo reset
+### Source is controlled by Agent:Mode in appsettings. RuleBased returns "rule-based"; Ollama returns "ollama".
 POST {{HostAddress}}/api/agent/query
 X-FlowAI-Api-Key: {{ApiKey}}
 Content-Type: application/json

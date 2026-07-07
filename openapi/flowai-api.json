@@ -2,7 +2,7 @@
   "openapi": "3.0.4",
   "info": {
     "title": "FlowAI Business Platform API",
-    "description": "ERP workflow portfolio API prepared for Power Platform Custom Connector and Copilot Studio mock integration.",
+    "description": "ERP workflow portfolio API prepared for Power Platform Custom Connector and Copilot Studio Agent integration.",
     "version": "v1"
   },
   "paths": {
@@ -99,7 +99,7 @@
         "tags": [
           "Agent"
         ],
-        "summary": "Gets delayed work order candidates using the current mock delay rule.",
+        "summary": "Gets delayed work order candidates using the current temporary delay rule.",
         "responses": {
           "200": {
             "description": "OK",
@@ -232,7 +232,7 @@
         "tags": [
           "Agent"
         ],
-        "summary": "Returns a mock natural-language answer from current in-memory workflow data.",
+        "summary": "Returns a RuleBased or Ollama-generated natural-language answer from current in-memory workflow data.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -759,6 +759,24 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "ApiKey": [ ]
+          }
+        ]
+      }
+    },
+    "/api/demo/reset": {
+      "post": {
+        "tags": [
+          "Demo"
+        ],
+        "summary": "Clears in-memory data and recreates a complete demo workflow dataset.",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         },
         "security": [
@@ -1425,6 +1443,48 @@
   },
   "components": {
     "schemas": {
+      "AgentQueryFactsResponse": {
+        "type": "object",
+        "properties": {
+          "pendingApprovalContracts": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "todayWorkOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "delayedWorkOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "onHoldSettlements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalSettlements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestedSettlements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "reviewingSettlements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "approvedSettlements": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rejectedSettlements": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "AgentQueryRequest": {
         "type": "object",
         "properties": {
@@ -1453,6 +1513,9 @@
           "generatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "facts": {
+            "$ref": "#/components/schemas/AgentQueryFactsResponse"
           }
         },
         "additionalProperties": false
@@ -1919,6 +1982,9 @@
     },
     {
       "name": "Dashboard"
+    },
+    {
+      "name": "Demo"
     },
     {
       "name": "FlowAI.Api"

@@ -13,13 +13,14 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.Configure<ApiKeyOptions>(builder.Configuration.GetSection("ApiKey"));
+builder.Services.Configure<AgentOptions>(builder.Configuration.GetSection("Agent"));
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "FlowAI Business Platform API",
         Version = "v1",
-        Description = "ERP workflow portfolio API prepared for Power Platform Custom Connector and Copilot Studio mock integration."
+        Description = "ERP workflow portfolio API prepared for Power Platform Custom Connector and Copilot Studio Agent integration."
     });
 
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -57,6 +58,8 @@ builder.Services.AddSingleton<DashboardService>();
 builder.Services.AddSingleton<AgentService>();
 builder.Services.AddSingleton<ApprovalRequestService>();
 builder.Services.AddSingleton<DemoDataService>();
+builder.Services.AddSingleton<RuleBasedAgentTextGenerationService>();
+builder.Services.AddHttpClient<OllamaAgentTextGenerationService>();
 
 
 var app = builder.Build();

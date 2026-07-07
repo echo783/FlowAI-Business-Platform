@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FlowAI.Api.Controllers;
 
 /// <summary>
-/// Provides mock query endpoints prepared for Copilot Studio and Power Platform connector scenarios.
+/// Provides Agent query endpoints prepared for Copilot Studio and Power Platform connector scenarios.
 /// </summary>
 [ApiController]
 [Route("api/agent")]
@@ -42,7 +42,7 @@ public class AgentController : ControllerBase
     }
 
     /// <summary>
-    /// Gets delayed work order candidates using the current mock delay rule.
+    /// Gets delayed work order candidates using the current temporary delay rule.
     /// </summary>
     [HttpGet("workorders/delayed")]
     public ActionResult<List<WorkOrder>> GetDelayedWorkOrders()
@@ -75,12 +75,14 @@ public class AgentController : ControllerBase
     }
 
     /// <summary>
-    /// Returns a mock natural-language answer from current in-memory workflow data.
+    /// Returns a RuleBased or Ollama-generated natural-language answer from current in-memory workflow data.
     /// </summary>
     [HttpPost("query")]
-    public ActionResult<AgentQueryResponse> Query(AgentQueryRequest request)
+    public async Task<ActionResult<AgentQueryResponse>> Query(
+        AgentQueryRequest request,
+        CancellationToken cancellationToken)
     {
-        var response = _agentService.Query(request);
+        var response = await _agentService.QueryAsync(request, cancellationToken);
 
         return Ok(response);
     }
