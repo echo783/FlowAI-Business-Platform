@@ -12,6 +12,7 @@ builder.Services.AddSingleton<StatusHistoryService>();
 builder.Services.AddSingleton<ContractService>();
 builder.Services.AddSingleton<WorkOrderService>();
 builder.Services.AddSingleton<SettlementService>();
+builder.Services.AddSingleton<DashboardService>();
 
 
 var app = builder.Build();

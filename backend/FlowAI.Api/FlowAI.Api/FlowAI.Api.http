@@ -93,3 +93,6 @@ Content-Type: application/json
   "holdReason": "Amount verification required"
 }
 
+### 17. Dashboard summary
+GET {{HostAddress}}/api/dashboard/summary
+Accept: application/json
