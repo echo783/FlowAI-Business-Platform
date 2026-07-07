@@ -16,7 +16,11 @@ public class DashboardSummaryResponse
 
     public int SettlementRequested { get; set; }
 
+    public int SettlementReviewing { get; set; }
+
     public int SettlementApproved { get; set; }
 
     public int SettlementHeld { get; set; }
+
+    public int SettlementRejected { get; set; }
 }

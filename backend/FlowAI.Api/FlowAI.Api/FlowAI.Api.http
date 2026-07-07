@@ -1,6 +1,6 @@
 @HostAddress = https://localhost:7168
 
-### 1. Create contract
+### 1. Create contract (계약 등록)
 POST {{HostAddress}}/api/contracts
 Content-Type: application/json
 
@@ -11,7 +11,7 @@ Content-Type: application/json
   "amount": 12000000
 }
 
-### 2. Request contract approval
+### 2. Request contract approval (계약 승인 요청)
 POST {{HostAddress}}/api/contracts/1/request-approval
 Content-Type: application/json
 
@@ -22,27 +22,23 @@ Content-Type: application/json
   "comment": "Please review this contract."
 }
 
-### 3. Approval request list
-GET {{HostAddress}}/api/approval-requests
-Accept: application/json
-
-### 4. Approve contract and auto-create work order
+### 3. Approve contract and auto-create work order (계약 승인 및 작업 자동 생성)
 POST {{HostAddress}}/api/contracts/1/approve
 Accept: application/json
 
-### 5. Confirm auto-created work order
+### 4. Confirm auto-created work order (자동 생성된 작업 확인)
 GET {{HostAddress}}/api/work-orders
 Accept: application/json
 
-### 6. Start work order
+### 5. Start work order (작업 시작)
 POST {{HostAddress}}/api/work-orders/1/start
 Accept: application/json
 
-### 7. Complete work order
+### 6. Complete work order (작업 완료)
 POST {{HostAddress}}/api/work-orders/1/complete
 Accept: application/json
 
-### 8. Request settlement
+### 7. Request settlement (정산 요청)
 POST {{HostAddress}}/api/settlements
 Content-Type: application/json
 
@@ -52,19 +48,71 @@ Content-Type: application/json
   "amount": 12000000
 }
 
-### 9. Approve settlement
+### 8. Start settlement review (정산 검토 시작)
+POST {{HostAddress}}/api/settlements/1/review
+Accept: application/json
+
+### 9. Approve settlement (정산 승인)
 POST {{HostAddress}}/api/settlements/1/approve
 Accept: application/json
 
-### 10. Dashboard summary
+### 10. Request second settlement for hold test (보류 테스트용 두 번째 정산 요청)
+POST {{HostAddress}}/api/settlements
+Content-Type: application/json
+
+{
+  "workOrderId": 1,
+  "settlementNo": "ST-2026-0002",
+  "amount": 8000000
+}
+
+### 11. Start second settlement review (두 번째 정산 검토 시작)
+POST {{HostAddress}}/api/settlements/2/review
+Accept: application/json
+
+### 12. Hold second settlement (두 번째 정산 보류)
+POST {{HostAddress}}/api/settlements/2/hold
+Content-Type: application/json
+
+{
+  "holdReason": "Amount verification required"
+}
+
+### 13. Request third settlement for reject test (반려 테스트용 세 번째 정산 요청)
+POST {{HostAddress}}/api/settlements
+Content-Type: application/json
+
+{
+  "workOrderId": 1,
+  "settlementNo": "ST-2026-0003",
+  "amount": 5000000
+}
+
+### 14. Start third settlement review (세 번째 정산 검토 시작)
+POST {{HostAddress}}/api/settlements/3/review
+Accept: application/json
+
+### 15. Reject third settlement (세 번째 정산 반려)
+POST {{HostAddress}}/api/settlements/3/reject
+Content-Type: application/json
+
+{
+  "rejectReason": "Supporting document is missing."
+}
+
+### 16. Dashboard summary (대시보드 업무 현황 요약)
 GET {{HostAddress}}/api/dashboard/summary
 Accept: application/json
 
-### 11. Agent customer status summary
+### 17. Agent customer status summary (Agent 고객사별 업무 상태 요약)
 GET {{HostAddress}}/api/agent/customers/Sample%20Customer/status-summary
 Accept: application/json
 
-### 12. Agent query dashboard summary
+### 18. Agent on-hold settlements (Agent 정산 보류 건 조회)
+GET {{HostAddress}}/api/agent/settlements/on-hold
+Accept: application/json
+
+### 19. Agent query dashboard summary (Agent 자연어 업무 현황 요약 질의)
 POST {{HostAddress}}/api/agent/query
 Content-Type: application/json
 
@@ -72,26 +120,6 @@ Content-Type: application/json
   "question": "현재 업무 현황 요약해줘"
 }
 
-### 13. Status history list
+### 20. Status history list (상태 변경 이력 조회)
 GET {{HostAddress}}/api/status-histories
 Accept: application/json
-
-### Optional. Contract list
-GET {{HostAddress}}/api/contracts
-Accept: application/json
-
-### Optional. Work order detail
-GET {{HostAddress}}/api/work-orders/1
-Accept: application/json
-
-### Optional. Settlement list
-GET {{HostAddress}}/api/settlements
-Accept: application/json
-
-### Optional. Reject contract example
-POST {{HostAddress}}/api/contracts/1/reject
-Content-Type: application/json
-
-{
-  "comment": "Contract amount requires revision."
-}

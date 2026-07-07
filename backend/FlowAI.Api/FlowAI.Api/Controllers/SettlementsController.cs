@@ -59,6 +59,24 @@ public class SettlementsController : ControllerBase
         );
     }
 
+    [HttpPost("{id:int}/review")]
+    public ActionResult<Settlement> Review(int id)
+    {
+        var result = _settlementService.Review(id);
+
+        if (result.IsNotFound)
+        {
+            return NotFound(result.Error);
+        }
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Settlement);
+    }
+
     [HttpPost("{id:int}/approve")]
     public ActionResult<Settlement> Approve(int id)
     {
@@ -81,6 +99,24 @@ public class SettlementsController : ControllerBase
     public ActionResult<Settlement> Hold(int id, HoldSettlementRequest request)
     {
         var result = _settlementService.Hold(id, request);
+
+        if (result.IsNotFound)
+        {
+            return NotFound(result.Error);
+        }
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Settlement);
+    }
+
+    [HttpPost("{id:int}/reject")]
+    public ActionResult<Settlement> Reject(int id, RejectSettlementRequest request)
+    {
+        var result = _settlementService.Reject(id, request);
 
         if (result.IsNotFound)
         {

@@ -68,7 +68,7 @@ public class SettlementService
         return SettlementResult.Success(settlement);
     }
 
-    public SettlementResult Approve(int id)
+    public SettlementResult Review(int id)
     {
         var settlement = GetById(id);
 
@@ -79,23 +79,37 @@ public class SettlementService
 
         if (settlement.Status != BusinessStatus.SettlementRequested)
         {
-            return SettlementResult.Invalid("Only requested settlements can be approved.");
+            return SettlementResult.Invalid("Only requested settlements can start review.");
         }
 
-        var beforeStatus = settlement.Status;
+        return ChangeStatus(
+            settlement,
+            BusinessStatus.SettlementReviewing,
+            "Settlement review started"
+        );
+    }
 
-        settlement.Status = BusinessStatus.SettlementApproved;
+    public SettlementResult Approve(int id)
+    {
+        var settlement = GetById(id);
+
+        if (settlement is null)
+        {
+            return SettlementResult.NotFound("Settlement not found.");
+        }
+
+        if (settlement.Status != BusinessStatus.SettlementReviewing)
+        {
+            return SettlementResult.Invalid("Only reviewing settlements can be approved.");
+        }
+
         settlement.ApprovedAt = DateTime.Now;
 
-        _statusHistoryService.AddHistory(
-            entityType: "Settlement",
-            entityId: settlement.Id,
-            fromStatus: beforeStatus,
-            toStatus: BusinessStatus.SettlementApproved,
-            memo: "Settlement approved"
+        return ChangeStatus(
+            settlement,
+            BusinessStatus.SettlementApproved,
+            "Settlement approved"
         );
-
-        return SettlementResult.Success(settlement);
     }
 
     public SettlementResult Hold(int id, HoldSettlementRequest request)
@@ -107,22 +121,69 @@ public class SettlementService
             return SettlementResult.NotFound("Settlement not found.");
         }
 
-        if (settlement.Status != BusinessStatus.SettlementRequested)
+        if (settlement.Status != BusinessStatus.SettlementReviewing)
         {
-            return SettlementResult.Invalid("Only requested settlements can be held.");
+            return SettlementResult.Invalid("Only reviewing settlements can be held.");
         }
 
-        var beforeStatus = settlement.Status;
+        if (string.IsNullOrWhiteSpace(request.HoldReason))
+        {
+            return SettlementResult.Invalid("Hold reason is required.");
+        }
 
-        settlement.Status = BusinessStatus.SettlementHeld;
         settlement.HoldReason = request.HoldReason;
+
+        return ChangeStatus(
+            settlement,
+            BusinessStatus.SettlementHeld,
+            $"Settlement held: {request.HoldReason}"
+        );
+    }
+
+    public SettlementResult Reject(int id, RejectSettlementRequest request)
+    {
+        var settlement = GetById(id);
+
+        if (settlement is null)
+        {
+            return SettlementResult.NotFound("Settlement not found.");
+        }
+
+        if (settlement.Status != BusinessStatus.SettlementReviewing)
+        {
+            return SettlementResult.Invalid("Only reviewing settlements can be rejected.");
+        }
+
+        var reason = string.IsNullOrWhiteSpace(request.RejectReason)
+            ? request.Comment
+            : request.RejectReason;
+
+        if (string.IsNullOrWhiteSpace(reason))
+        {
+            return SettlementResult.Invalid("Reject reason or comment is required.");
+        }
+
+        return ChangeStatus(
+            settlement,
+            BusinessStatus.SettlementRejected,
+            $"Settlement rejected: {reason}"
+        );
+    }
+
+    private SettlementResult ChangeStatus(
+        Settlement settlement,
+        BusinessStatus toStatus,
+        string memo)
+    {
+        var beforeStatus = settlement.Status;
+        settlement.Status = toStatus;
 
         _statusHistoryService.AddHistory(
             entityType: "Settlement",
             entityId: settlement.Id,
             fromStatus: beforeStatus,
-            toStatus: BusinessStatus.SettlementHeld,
-            memo: $"Settlement held: {request.HoldReason}"
+            toStatus: toStatus,
+            memo: memo
         );
 
         return SettlementResult.Success(settlement);

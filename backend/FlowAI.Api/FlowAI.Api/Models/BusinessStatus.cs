@@ -17,6 +17,7 @@ public enum BusinessStatus
     SettlementReviewing = 80,       // 정산 검토 중
     SettlementApproved = 90,        // 정산 승인
     SettlementHeld = 100,           // 정산 보류
+    SettlementRejected = 101,       // 정산 반려
 
     ApprovalRequested = 110,        // 승인 요청
     ApprovalApproved = 120,         // 승인 완료

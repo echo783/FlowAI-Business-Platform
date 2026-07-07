@@ -36,8 +36,10 @@ public class DashboardService
             WorkCompleted = workOrders.Count(x => x.Status == BusinessStatus.WorkCompleted),
             TotalSettlements = settlements.Count,
             SettlementRequested = settlements.Count(x => x.Status == BusinessStatus.SettlementRequested),
+            SettlementReviewing = settlements.Count(x => x.Status == BusinessStatus.SettlementReviewing),
             SettlementApproved = settlements.Count(x => x.Status == BusinessStatus.SettlementApproved),
-            SettlementHeld = settlements.Count(x => x.Status == BusinessStatus.SettlementHeld)
+            SettlementHeld = settlements.Count(x => x.Status == BusinessStatus.SettlementHeld),
+            SettlementRejected = settlements.Count(x => x.Status == BusinessStatus.SettlementRejected)
         };
     }
 }

@@ -145,8 +145,8 @@ public class AgentService
             return
                 $"전체 계약 {summary.TotalContracts}건, 승인 계약 {summary.ApprovedContracts}건, " +
                 $"작업 {summary.TotalWorkOrders}건, 진행 중 작업 {summary.WorkInProgress}건, 완료 작업 {summary.WorkCompleted}건, " +
-                $"정산 {summary.TotalSettlements}건, 정산 요청 {summary.SettlementRequested}건, " +
-                $"정산 승인 {summary.SettlementApproved}건, 정산 보류 {summary.SettlementHeld}건입니다.";
+                $"정산 {summary.TotalSettlements}건, 정산 요청 {summary.SettlementRequested}건, 검토 중 정산 {summary.SettlementReviewing}건, " +
+                $"정산 승인 {summary.SettlementApproved}건, 정산 보류 {summary.SettlementHeld}건, 정산 반려 {summary.SettlementRejected}건입니다.";
         }
 
         return "현재는 계약, 작업, 정산, 대시보드 현황 조회를 지원합니다.";
